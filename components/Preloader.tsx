@@ -70,7 +70,7 @@ export const Preloader = () => {
               <text
                 x="100"
                 y="170"
-                fontFamily="Ahsing, sans-serif"
+                style={{ fontFamily: 'var(--font-ahsing), sans-serif' }}
                 fontSize="160"
                 textAnchor="middle"
                 fill="black"
@@ -84,7 +84,7 @@ export const Preloader = () => {
           <text
             x="100"
             y="170"
-            fontFamily="Ahsing, sans-serif"
+            style={{ fontFamily: 'var(--font-ahsing), sans-serif' }}
             fontSize="160"
             textAnchor="middle"
             fill="none"

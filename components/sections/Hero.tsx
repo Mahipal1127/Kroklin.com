@@ -25,7 +25,7 @@ what one person can manage.`}
         <motion.h1 
           className="font-black text-[#0E0F0C] w-full"
           style={{ 
-            fontFamily: "'Ahsing', sans-serif",
+            fontFamily: "var(--font-ahsing), sans-serif",
             fontSize: '22vw', 
             lineHeight: '1.09', 
             letterSpacing: '0.04em', 

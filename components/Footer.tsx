@@ -20,7 +20,7 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold tracking-wider mb-4" style={{ fontFamily: "'Ahsing', sans-serif" }}>KROKLIN</h3>
+            <h3 className="text-2xl font-bold tracking-wider mb-4" style={{ fontFamily: "var(--font-ahsing), sans-serif" }}>KROKLIN</h3>
             <p className="text-[#8A8B85] mb-6">Where ambition meets automation.</p>
             <div className="flex gap-4">
               <a href="https://www.instagram.com/kroklin.in" target="_blank" rel="noopener noreferrer" className="text-[#8A8B85] hover:text-[#FAFAF7] transition-colors">
@@ -82,7 +82,7 @@ export const Footer = () => {
         <h2
           className="text-center font-bold leading-none select-none"
           style={{
-            fontFamily: "'Ahsing', sans-serif",
+            fontFamily: "var(--font-ahsing), sans-serif",
             fontSize: '18vw',
             lineHeight: '-1.25',
             letterSpacing: '0.09em',

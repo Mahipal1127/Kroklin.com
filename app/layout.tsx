@@ -46,6 +46,18 @@ const mileast = localFont({
   display: "swap",
 });
 
+const ahsing = localFont({
+  src: [
+    {
+      path: "../public/fonts/Ahsing.otf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-ahsing",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Kroklin",
   description: "Where ambition meets automation",
@@ -59,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${playfairDisplay.variable} ${poppins.variable} ${spaceGrotesk.variable} ${mileast.variable} h-full antialiased`}
+      className={`${outfit.variable} ${playfairDisplay.variable} ${poppins.variable} ${spaceGrotesk.variable} ${mileast.variable} ${ahsing.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Preloader />

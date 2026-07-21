@@ -151,7 +151,7 @@ export const Navbar = () => {
           <div className="flex items-center justify-center">
             {/* Stylized "K" logo */}
             <span
-              style={{ fontFamily: 'Ahsing, sans-serif' }}
+              style={{ fontFamily: 'var(--font-ahsing), sans-serif' }}
               className="text-4xl text-[#3D4A2A] font-bold leading-none"
             >
               K
