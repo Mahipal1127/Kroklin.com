@@ -4,8 +4,46 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Reveal } from '@/components/Reveal';
 
+type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+const encode = (data: Record<string, string>) =>
+  Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
+
 export default function ContactPage() {
   const [currentTime, setCurrentTime] = useState('');
+  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
+  const [botField, setBotField] = useState('');
+  const [status, setStatus] = useState<SubmitStatus>('idle');
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('submitting');
+    try {
+      const res = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({
+          'form-name': 'contact',
+          'bot-field': botField,
+          ...form,
+        }),
+      });
+      if (!res.ok) throw new Error(`Submit failed: ${res.status}`);
+      setStatus('success');
+      setForm({ name: '', phone: '', email: '', message: '' });
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
+  };
 
   useEffect(() => {
     const updateTime = () => {
@@ -94,7 +132,27 @@ export default function ContactPage() {
               <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-[#0E0F0C] mb-8">
                 Fill in the form
               </h2>
-              <form className="space-y-6">
+              <form
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
+                {/* Netlify needs this hidden field to route the submission */}
+                <input type="hidden" name="form-name" value="contact" />
+                {/* Honeypot: hidden from real users, catches bots */}
+                <p className="hidden">
+                  <label>
+                    Don&apos;t fill this out if you&apos;re human:
+                    <input
+                      name="bot-field"
+                      value={botField}
+                      onChange={(e) => setBotField(e.target.value)}
+                    />
+                  </label>
+                </p>
                 {/* Name */}
                 <div>
                   <label className="block text-[#8A8B85] text-xs uppercase tracking-widest mb-2 font-[family-name:var(--font-poppins)]">
@@ -102,6 +160,10 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
                     className="w-full px-0 py-3 border-b border-[#D4D5CF] focus:outline-none focus:border-[#3D4A2A] bg-transparent text-[#0E0F0C] placeholder-[#D4D5CF] transition-colors"
                     placeholder="John Doe"
                   />
@@ -114,6 +176,9 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
                     className="w-full px-0 py-3 border-b border-[#D4D5CF] focus:outline-none focus:border-[#3D4A2A] bg-transparent text-[#0E0F0C] placeholder-[#D4D5CF] transition-colors"
                     placeholder="+91 12345 67890"
                   />
@@ -126,6 +191,10 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
                     className="w-full px-0 py-3 border-b border-[#D4D5CF] focus:outline-none focus:border-[#3D4A2A] bg-transparent text-[#0E0F0C] placeholder-[#D4D5CF] transition-colors"
                     placeholder="name@domain.com"
                   />
@@ -138,6 +207,10 @@ export default function ContactPage() {
                   </label>
                   <textarea
                     rows={4}
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    required
                     className="w-full px-0 py-3 border-b border-[#D4D5CF] focus:outline-none focus:border-[#3D4A2A] bg-transparent text-[#0E0F0C] placeholder-[#D4D5CF] transition-colors resize-none"
                     placeholder="Write a few words about your project and the scope of work you are interested in."
                   ></textarea>
@@ -151,14 +224,27 @@ export default function ContactPage() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-3 bg-[#0E0F0C] text-white px-8 py-4 rounded-md hover:bg-[#1A1B17] transition-colors font-semibold text-sm"
+                  disabled={status === 'submitting'}
+                  className="inline-flex items-center gap-3 bg-[#0E0F0C] text-white px-8 py-4 rounded-md hover:bg-[#1A1B17] transition-colors font-semibold text-sm disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Send a message
+                  {status === 'submitting' ? 'Sending…' : 'Send a message'}
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14" />
                     <path d="m12 5 7 7-7 7" />
                   </svg>
                 </button>
+
+                {/* Feedback messages */}
+                {status === 'success' && (
+                  <p className="text-[#3D4A2A] text-sm font-semibold" role="status">
+                    Thanks! Your message has been sent. We&apos;ll get back to you soon.
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p className="text-red-600 text-sm font-semibold" role="alert">
+                    Something went wrong. Please try again or email us directly.
+                  </p>
+                )}
               </form>
             </div>
           </div>
