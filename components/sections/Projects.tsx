@@ -13,7 +13,7 @@ export const Projects = () => {
     <section className="py-20 bg-white">
       <UnderConstructionPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Row 1 */}
           {/* Header + Stat Cell */}
           <div className="flex flex-col gap-6">
@@ -53,7 +53,7 @@ export const Projects = () => {
                   src="/p1.png"
                   alt="DS Tour & Travels"
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -78,7 +78,7 @@ export const Projects = () => {
                   src="/p2.png"
                   alt="Velora"
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -90,7 +90,7 @@ export const Projects = () => {
           <Reveal delay={0.2} className="lg:row-span-2">
             <button
               onClick={() => setIsPopupOpen(true)}
-              className="bg-white flex flex-col h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D4A2A] w-full text-left"
+              className="bg-white flex flex-col aspect-[3/4] lg:aspect-auto lg:h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D4A2A] w-full text-left"
             >
               <div className="flex flex-col items-center gap-2 p-6">
                 <h3 className="font-semibold text-xs text-[#0E0F0C] uppercase tracking-wider">BrandX</h3>
@@ -102,7 +102,7 @@ export const Projects = () => {
                   src="/p3.png"
                   alt="BrandX"
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -111,8 +111,8 @@ export const Projects = () => {
 
           {/* See More Cell */}
           <Reveal delay={0.25} className="lg:row-span-2">
-            <Link href="/work" className="bg-white flex items-center justify-center p-6 h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D4A2A] group aspect-[3/4]">
-              <div className="w-48 h-48 border border-[#D4D5CF] rounded-full flex flex-col items-center justify-center group-hover:border-[#3D4A2A] transition-colors">
+            <Link href="/work" className="bg-white flex items-center justify-center p-6 aspect-[3/4] lg:aspect-auto lg:h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D4A2A] group">
+              <div className="w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 border border-[#D4D5CF] rounded-full flex flex-col items-center justify-center group-hover:border-[#3D4A2A] transition-colors">
                 <span className="text-[#4D4E48] text-xs uppercase tracking-wider mb-2">See more</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-[#3D4A2A] transition-colors">
                   <path d="M5 12h14"/>
