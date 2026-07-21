@@ -53,6 +53,7 @@ export const Projects = () => {
                   src="/p1.png"
                   alt="DS Tour & Travels"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -77,6 +78,7 @@ export const Projects = () => {
                   src="/p2.png"
                   alt="Velora"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -100,6 +102,7 @@ export const Projects = () => {
                   src="/p3.png"
                   alt="BrandX"
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
               </div>

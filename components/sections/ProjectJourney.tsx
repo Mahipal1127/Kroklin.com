@@ -1,6 +1,7 @@
 'use client';
 
 import { Reveal } from '../Reveal';
+import { LazyVideo } from '../LazyVideo';
 
 const journeySteps = [
   {
@@ -65,12 +66,8 @@ export const ProjectJourney = () => {
                 {/* Right Column - Video */}
                 <div className="lg:col-span-7">
                   <div className="aspect-video bg-[#1A1B17] relative overflow-hidden border border-[#2A2B26]">
-                    <video
+                    <LazyVideo
                       src={step.videoSrc}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
                       className="w-full h-full object-cover"
                     />
                   </div>

@@ -60,11 +60,12 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
       <Reveal delay={0.1}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-20">
           <div className="aspect-[16/9] bg-[#D4D5CF] border border-[#D4D5CF] overflow-hidden relative">
-            <Image 
-              src={project.image} 
-              alt={project.title} 
-              fill 
-              className="object-cover" 
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className="object-cover"
             />
           </div>
         </div>

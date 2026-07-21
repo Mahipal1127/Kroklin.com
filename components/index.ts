@@ -1,6 +1,7 @@
 export * from './Navbar';
 export * from './Footer';
 export * from './Reveal';
+export * from './LazyVideo';
 export * from './SmoothScrollProvider';
 export * from './Preloader';
 export * from './ScrollToTop';
