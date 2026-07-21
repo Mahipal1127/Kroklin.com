@@ -28,6 +28,10 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+  /* Guard against sideways scroll from full-bleed display text (22vw/18vw)
+     and marquees on small screens. `clip` (not `hidden`) avoids creating a
+     scroll container, so the Navbar's `sticky top-0` keeps working. */
+  overflow-x: clip;
 }
 
 * {
