@@ -32,7 +32,7 @@ export const ServicesTeaser = () => {
       if (testimonialRef.current) {
         gsap.from(testimonialRef.current, {
           opacity: 0,
-          x: -50,
+          y: 40,
           duration: 0.8,
           ease: 'power3.out',
           scrollTrigger: {

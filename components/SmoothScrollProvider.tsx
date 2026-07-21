@@ -50,9 +50,29 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
     lenis.on('scroll', updateScrollTrigger);
 
+    // ScrollTrigger reads element positions synchronously on creation, but on
+    // first load the layout is not yet stable: custom fonts (next/font) and
+    // images (project cards, brand logos) still change element heights after
+    // hydration, and the preloader overlay delays the real paint. If we don't
+    // re-measure, the initial `from` states (and their transforms) stay applied
+    // against stale positions until the first scroll forces an update — which is
+    // what caused the page to appear shifted/overflowing until the user scrolled.
+    // Refresh once now and again whenever the layout settles.
+    ScrollTrigger.refresh();
+
+    const refresh = () => ScrollTrigger.refresh();
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(refresh);
+    }
+    window.addEventListener('load', refresh);
+    window.addEventListener('resize', refresh);
+
     return () => {
       lenis.destroy();
       lenis.off('scroll', updateScrollTrigger);
+      window.removeEventListener('load', refresh);
+      window.removeEventListener('resize', refresh);
       globalLenisRef.current = null;
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };

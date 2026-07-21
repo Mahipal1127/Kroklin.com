@@ -19,7 +19,7 @@ export const ClosingCTA = () => {
 
     const ctx = gsap.context(() => {
       gsap.from(chars, {
-        x: 120,
+        y: 30,
         opacity: 0,
         stagger: 0.03,
         ease: 'power3.out',
