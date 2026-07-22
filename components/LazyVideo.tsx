@@ -7,6 +7,8 @@ type LazyVideoProps = {
   className?: string;
   /** Distance from the viewport at which loading begins. */
   rootMargin?: string;
+  /** Poster image URL to show while video loads */
+  poster?: string;
 };
 
 /**
@@ -16,7 +18,7 @@ type LazyVideoProps = {
  * where eagerly fetching several large clips saturates the connection and
  * stalls the rest of the page.
  */
-export function LazyVideo({ src, className, rootMargin = '200px' }: LazyVideoProps) {
+export function LazyVideo({ src, className, rootMargin = '100px', poster }: LazyVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isNear, setIsNear] = useState(false);
 
@@ -63,14 +65,17 @@ export function LazyVideo({ src, className, rootMargin = '200px' }: LazyVideoPro
   }, [isNear]);
 
   return (
-    <video
-      ref={videoRef}
-      src={isNear ? src : undefined}
-      loop
-      muted
-      playsInline
-      preload="none"
-      className={className}
-    />
+    <div className="w-full h-full bg-[#1A1B17]">
+      <video
+        ref={videoRef}
+        src={isNear ? src : undefined}
+        loop
+        muted
+        playsInline
+        preload="none"
+        poster={poster}
+        className={className}
+      />
+    </div>
   );
 }
