@@ -12,14 +12,19 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis();
+    // Initialize Lenis with optimized settings
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
 
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    const rafId = requestAnimationFrame(raf);
 
     lenisRef.current = lenis;
     globalLenisRef.current = lenis;
@@ -44,22 +49,21 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
     ScrollTrigger.defaults({ scroller: document.documentElement });
 
+    // Only update ScrollTrigger when needed (debounced slightly to reduce calls)
+    let ticking = false;
     const updateScrollTrigger = () => {
-      ScrollTrigger.update();
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          ScrollTrigger.update();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     lenis.on('scroll', updateScrollTrigger);
 
-    // ScrollTrigger reads element positions synchronously on creation, but on
-    // first load the layout is not yet stable: custom fonts (next/font) and
-    // images (project cards, brand logos) still change element heights after
-    // hydration, and the preloader overlay delays the real paint. If we don't
-    // re-measure, the initial `from` states (and their transforms) stay applied
-    // against stale positions until the first scroll forces an update — which is
-    // what caused the page to appear shifted/overflowing until the user scrolled.
-    // Refresh once now and again whenever the layout settles.
-    ScrollTrigger.refresh();
-
+    // Refresh ScrollTrigger on layout changes
     const refresh = () => ScrollTrigger.refresh();
 
     if (document.fonts?.ready) {
@@ -69,6 +73,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     window.addEventListener('resize', refresh);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       lenis.off('scroll', updateScrollTrigger);
       window.removeEventListener('load', refresh);

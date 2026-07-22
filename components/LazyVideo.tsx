@@ -20,55 +20,37 @@ type LazyVideoProps = {
  */
 export function LazyVideo({ src, className, rootMargin = '100px', poster }: LazyVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isNear, setIsNear] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Attach the source only when the element approaches the viewport.
   useEffect(() => {
     const el = videoRef.current;
-    if (!el || isNear) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setIsNear(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [isNear, rootMargin]);
-
-  // Once the source is attached, play/pause based on actual visibility so
-  // off-screen clips don't burn CPU/battery.
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el || !isNear) return;
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
+            if (!isLoaded) {
+              el.src = src;
+              setIsLoaded(true);
+            }
             el.play().catch(() => {});
           } else {
             el.pause();
           }
         }
       },
-      { threshold: 0.25 }
+      { rootMargin, threshold: 0.25 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [isNear]);
+  }, [src, rootMargin, isLoaded]);
 
   return (
     <div className="w-full h-full bg-[#1A1B17]">
       <video
         ref={videoRef}
-        src={isNear ? src : undefined}
         loop
         muted
         playsInline
