@@ -41,6 +41,7 @@ export const OurPrinciples = () => {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 75%',
+            once: true,
           },
         });
       }

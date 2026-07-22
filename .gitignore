@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw source videos (transcoded web versions live in /public)
+/.video-originals/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

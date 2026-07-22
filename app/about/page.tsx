@@ -1,18 +1,13 @@
-'use client';
-
-import { useState } from 'react';
 import Image from 'next/image';
 import { Reveal } from '@/components/Reveal';
-import { OurPrinciples, ClosingCTA } from '@/components/sections';
+import { OurPrinciples, ClosingCTA, WhyKroklin } from '@/components/sections';
 
 export default function AboutPage() {
-  const [activeCard, setActiveCard] = useState(2);
-
   return (
     <div>
       {/* Top Tagline */}
       <Reveal>
-        <section className="pt-20 pb-05">
+        <section className="pt-20 pb-5">
           <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
             <p className="font-[family-name:var(--font-poppins)] text-xs uppercase tracking-[0.25em] text-[#0E0F0C]">
               WE ARE KROKLIN
@@ -100,7 +95,7 @@ export default function AboutPage() {
         </section>
       </Reveal>
 
-        {/* Why Kroklin Section */}
+      {/* Why Kroklin Section */}
       <Reveal delay={0.4}>
         <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -112,46 +107,7 @@ export default function AboutPage() {
                 We don&apos;t just build products; we build partnerships that drive real results and lasting impact.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { num: "01", title: "Strategy First", description: "We understand your business before we build." },
-                { num: "02", title: "Exceptional Quality", description: "Every detail is carefully designed and engineered." },
-                { num: "03", title: "Future-Ready Solutions", description: "Built to adapt, scale, and grow with your business." },
-                { num: "04", title: "Long-Term Partnership", description: "We're invested in your success long after launch." },
-              ].map((item, idx) => {
-                const isActive = activeCard === idx;
-                return (
-                  <div
-                    key={item.num}
-                    onMouseEnter={() => setActiveCard(idx)}
-                    className={`group rounded-xl p-6 flex flex-col justify-between min-h-[320px] transition-colors duration-300 cursor-default border ${
-                      isActive ? "bg-white border-[#E5E5E0] shadow-sm" : "bg-[#F5F5F2] border-transparent"
-                    }`}
-                  >
-                    <div>
-                      <span className={`text-sm font-mono transition-colors duration-300 ${isActive ? "text-[#3D4A2A]" : "text-[#9A9B95]"}`}>
-                        {item.num}
-                      </span>
-                      <h3 className="font-[family-name:var(--font-poppins)] font-bold text-lg md:text-xl text-[#0E0F0C] mt-3">
-                        {item.title}
-                      </h3>
-                      <p
-                        className={`text-[#8A8B85] text-sm leading-relaxed transition-all duration-300 ${
-                          isActive ? "opacity-100 mt-6" : "opacity-0 mt-0 h-0 overflow-hidden"
-                        }`}
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                    <div className="mt-6">
-                      <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white shadow-sm text-[#3D4A2A] text-xl leading-none">
-                        +
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <WhyKroklin />
           </div>
         </section>
       </Reveal>
@@ -197,9 +153,9 @@ export default function AboutPage() {
         </section>
       </Reveal>
 
-        <Reveal delay={0.6}>
-          <OurPrinciples />
-        </Reveal>
+      <Reveal delay={0.6}>
+        <OurPrinciples />
+      </Reveal>
 
       {/* Location */}
       <Reveal delay={0.7}>

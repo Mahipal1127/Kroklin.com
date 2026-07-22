@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Playfair_Display, Poppins, Space_Grotesk } from "next/font/google";
+import { Outfit, Playfair_Display, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar, Footer, Preloader, ScrollToTop, RedirectToHomeOnReload } from "@/components";
@@ -8,25 +8,25 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 const outfit = Outfit({
   variable: "--font-general-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["700", "900"],
+  display: "swap",
+  // Only referenced by components that aren't rendered on any current route,
+  // so keep it out of the initial preload and off the critical path.
+  preload: false,
 });
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["700"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const mileast = localFont({
@@ -60,7 +60,15 @@ const ahsing = localFont({
 
 export const metadata: Metadata = {
   title: "Kroklin",
-  description: "Where ambition meets automation",
+  description: "Where ambition meets automation. We combine strategy, design, and development to create digital products that make a lasting impact.",
+  keywords: ["web design", "digital marketing", "branding", "automation", "Kroklin"],
+  openGraph: {
+    title: "Kroklin",
+    description: "Where ambition meets automation.",
+    url: "https://kroklin.in",
+    siteName: "Kroklin",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -71,7 +79,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${playfairDisplay.variable} ${poppins.variable} ${spaceGrotesk.variable} ${mileast.variable} ${ahsing.variable} h-full antialiased`}
+      className={`${outfit.variable} ${playfairDisplay.variable} ${poppins.variable} ${mileast.variable} ${ahsing.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Preloader />
